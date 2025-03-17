@@ -1,0 +1,17 @@
+cython_bbox==0.1.5
+filterpy==1.4.5
+lap==0.5.12
+matplotlib==3.10.1
+numpy==2.2.4
+opencv_python==4.10.0.84
+opencv_python_headless==4.10.0.84
+pandas==2.2.3
+pyproj==3.7.1
+pyshp==2.3.1
+rasterio==1.4.3
+scipy==1.15.2
+scikit-image==0.0
+torch==2.6.0+cu118
+torchvision==0.21.0+cu118
+utm==0.8.0
+yolov5==7.0.14
