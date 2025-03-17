@@ -1,4 +1,4 @@
-# KA_ZED_Video_Fruit_Counting
+# Video Fruit Counting
 
 ## Summary
 We provide a method of fruit counting. To achieve this, YOLOv5 object detection and ByteTrack object tracking technologies are used to develop a highly efficient method.
