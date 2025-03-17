@@ -4,13 +4,13 @@ import os
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Evaluate detection')
+    parser = argparse.ArgumentParser(description='Perform apple assignment to stretches')
 
     parser.add_argument('--data_path', dest='data_path',
-                        help='Path where the subdirectories generated when executing the FruitTracker_inference.py'
-                             'file are located.')
+                        help='Path where the subdirectories generated when executing the fruit_tracker_simple.py'
+                             'script are located.')
     parser.add_argument('--sframe_file', dest='sframe_file',
-                        help='Path to the stretch frames "csv" file. Not needed in case of SGNSS mode.', required=False)
+                        help='Path to the stretch frames "csv" file.', required=False)
 
     args = parser.parse_args()
 
