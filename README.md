@@ -68,10 +68,10 @@ The workflow is divided into two main steps:
 
 Required Files:
 
-* Download Example Videos (KA or ZED)
-* Download Pre-trained YOLOv5 Model
-* Download SFRAME Files
-* Run the fruit_tracker_simple.py script:
+- [Download example videos](https://gofile.me/73Gps/3VE9yy9aX)
+- [Download pretrained YOLOv5 model](https://gofile.me/73Gps/clQj1gJhv)
+- [Download SFRAME files](https://gofile.me/73Gps/DECp9orob)
+- Run the fruit_tracker_simple.py script:
 
 ```
 $ python fruit_tracker_simple.py --help
