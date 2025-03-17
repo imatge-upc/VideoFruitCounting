@@ -15,28 +15,28 @@ two methods can be used:
     This file is used in combination with a tracking file, which contains the geolocation of the camera during the recording (sampled at xxx Hz). This info is stored in a .txt file, with the same base name as the video sequence.
 
 Example:
-'''
+```
     $GNGGA,080625.60,4137.07186,N,00052.24083,E,4,12,0.57,246.6,M,49.7,M,0.6,0012*6D,2021-09-28 08:06:25.980797
     $GNGGA,080625.70,4137.07186,N,00052.24083,E,4,12,0.57,246.6,M,49.7,M,0.7,0012*6D,2021-09-28 08:06:26.047875
     ...
-'''
+```
 
     In our examples, this mode is only used for the ZED camera, as the .
 
  b) SFRAME mode: Using a .csv file containing the frame numbers where the ribbons appear exactly at the center of the image.  
 
 Example
-'''
+```
     210928_114406_k_r2_e_015_175_162,2199,2622,2997,3474,3806,4167,4538,4922,5275,5657,6042,6469,6915,7386,7781,8231,8636,9032,9498,9862,10267,10618
     210906_112041_k_r2_e_015_175_162,880,1184,1412,1711,1963,2225,2497,2786,3070,3412,3731,4011,4312,4608,4853,5133,5395,5652,5920,6216,6498,6753
     ...
-'''
+```
 
 
 The videos are named using the following convention:
-'''
+```
 date_time_cameratype_row_orientation_stretchnumber_distance_???.{svo,mkv}
-'''
+```
 
 distance: YYYMMDD_HHMMSS
 camera type: z (ZED) or k (Kinect). p???
