@@ -104,9 +104,9 @@ Example Command:
 python3 fruit_tracker_simple.py --video data/210928_100624_k_r1_e_015_225_162_rgb.avi --segments data/SFRAME/KA_stretch_sframe.csv --weights data/last.pt --min_area -1 --rotate True --camera KA --data data/apple_segmentation.yaml --results_file results/all_predictions.csv
 ```
 
-** Output:**
+**Output:**
 
-The tracking results will be saved in results/all_predictions.csv.
+The tracking results will be saved in ```results/all_predictions.csv```
 
 ### Step 2: Fruit Count Assignment
 After running fruit_tracker_simple.py, use the assign_apples.py script to count the fruits in each stretch.
@@ -114,9 +114,17 @@ After running fruit_tracker_simple.py, use the assign_apples.py script to count 
 Run the ```assign_apples.py``` script:
 
 ```
-python3 assign_apples.py \
-    --data_path $PATH_TO_PREVIOUS_RESULTS_PARENT_DIR \
-    --gt_file $PATH_TO_SFRAME_FILE
+python assign_apples.py --help
+usage: assign_apples.py [-h] [--data_path DATA_PATH] [--sframe_file SFRAME_FILE]
+
+Evaluate detection
+
+options:
+  -h, --help            show this help message and exit
+  --data_path DATA_PATH
+                        Path where the subdirectories generated when executing the fruit_tracker_simple.py file are located.
+  --sframe_file SFRAME_FILE
+                        Path to the stretch frames "csv" file.
 ```
 
 Example Command:
