@@ -61,8 +61,8 @@ Example: ```210928_080625_z_r1_e_015_225_162.mp4```
 ## Getting Started
 The workflow is divided into two main steps:
 
-1. Object Detection and Tracking (Inference): Running the fruit_tracker_simple.py script to detect and track fruits in the video frames.
-2. Fruit Count Assignment: Using the assign_apples.py script to parse the tracking results and count the fruits in each stretch.
+1. Object Detection and Tracking (Inference): Running the ```fruit_tracker_simple.py``` script to detect and track fruits in the video frames.
+2. Fruit Count Assignment: Using the ```assign_apples.py``` script to parse the tracking results and count the fruits in each stretch.
 
 
 ### Step 1: Inference / Demo (Object Detection and Tracking)
@@ -75,18 +75,30 @@ Required Files:
 * Run the fruit_tracker_simple.py script:
 
 ```
-python3 fruit_tracker_simple.py \
-    --video $VIDEO_PATH \
-    --segments $SFRAME_PATH \
-    --weights $YOLO_WEIGHTS_PATH \
-    --conf $MINIMUM_DETECTION_CONFIDENCE \
-    --tracker $TRACKER_TYPE \
-    --camera $CAMERA_TYPE \
-    --data $YOLO_DATA_YAML \
-    --results_file $OUTPUT_CSV_PATH \
-    --min_area $MINIMUM_AREA \
-    --rotate $ROTATE_FLAG \
-    --offset $FRAMES_TO_SKIP
+$ python fruit_tracker_simple.py --help
+usage: fruit_tracker_simple.py [-h] [--video VIDEO] [--segments-file SEGMENTS_FILE] [--weights WEIGHTS] [--offset OFFSET] [--conf CONFIDENCE]
+                               [--min_area MIN_AREA] [--data DATA] [--camera CAMERA] [--rotate ROTATE] [--results_file PREDICTIONS_FILENAME]
+
+Evaluate detection
+
+options:
+  -h, --help            show this help message and exit
+  --video VIDEO         Video file path.
+  --segments-file SEGMENTS_FILE
+                        File containing the limits of the segments. For each video, the segment limits are defined at the frame where the segment change line
+                        is centered on the frame.
+  --weights WEIGHTS     Weights file for the YOLOv5 detection model
+  --offset OFFSET       Number of frames to skip at the beginning.
+  --conf CONFIDENCE     Minimum detection confidence to be taken into account.
+  --min_area MIN_AREA   Min area (in pixels) of the apples to be tracked. If -1, the value will be determinedfrom the seventh field of the video file name
+                        (distance).
+  --data DATA           dataset.yaml path
+  --camera CAMERA       Camera type (ZED or KA). Only necessary for the provided videos.
+  --rotate ROTATE       Whether to rotate each frame 90º clockwise. Useful when camera has been situated vertically
+  --results_file PREDICTIONS_FILENAME
+                        Filename for the output tracking results
+```
+
 Example Command:
 ```
 python3 fruit_tracker_simple.py --video data/210928_100624_k_r1_e_015_225_162_rgb.avi --segments data/SFRAME/KA_stretch_sframe.csv --weights data/last.pt --min_area -1 --rotate True --camera KA --data data/apple_segmentation.yaml --results_file results/all_predictions.csv
