@@ -15,7 +15,6 @@ This solution is invaluable for agricultural applications, providing accurate fr
 We offer:
 
 * Complete code implementation
-* Detailed documentation
 * Example annotated videos
 * Pre-trained models for easy adaptation to diverse scenarios
 
@@ -41,18 +40,18 @@ The provided dataset consists of videos recorded along rows of apple trees orien
 * Only the RGB (left view) information was utilized.
 * Videos are named using the following convention:
 ```
-date_time_cameratype_row_orientation_stretchnumber_distance_cameraheight.{svo,mkv,mp4}
+date_time_cameratype_row_orientation_stretchnumber_distance_height.{svo,mkv,mp4}
 ```
 
 Where:
 
-* date_time: YYYYMMDD_HHMMSS
-* cameratype: z (ZED) or k (Kinect)
-* row: r{1d} (row number)
-* orientation: e (East) or w (West)
-* stretchnumber: {%03d} (stretch ID, 000-020)
-* distance: {%03d} (distance from camera to trees, 125, 175, or 225 cm)
-* height: {%03d} (camera height in centimeters)
+* **date_time**: ```YYYYMMDD_HHMMSS```
+* **cameratype**: ```z``` (ZED) or ```k``` (Kinect)
+* **row**: ```r{1d}``` (row number)
+* **orientation**: ```e``` (East) or ```w``` (West)
+* **stretchnumber**: ```{%03d}``` (stretch ID, 000-020)
+* **distance**: ```{%03d}``` (distance from camera to trees, 125, 175, or 225 cm)
+* **height**: ```{%03d}``` (camera height in centimeters)
 
 For ease of use, the original SVO and MKV videos have been converted to MP4 format, eliminating the need to install the ZED and Kinect SDKs.
 
@@ -117,7 +116,7 @@ Run the ```assign_apples.py``` script:
 python assign_apples.py --help
 usage: assign_apples.py [-h] [--data_path DATA_PATH] [--sframe_file SFRAME_FILE]
 
-Evaluate detection
+Perform apple assignment to stretches
 
 options:
   -h, --help            show this help message and exit
@@ -130,10 +129,10 @@ options:
 Example Command:
 
 ```
-python3 assign_apples.py --data_path "../FruitTracking/results/results_SFRAME/ZED" --gt_file "ZED_stretch_SFRAME.csv"
+python3 assign_apples.py  --data_path ./results --sframe_file ./data/SFRAME/KA_stretch_sframe.csv 
 ```
 
-Output:
+**Output:**
 
 Two CSV files will be generated:
 
