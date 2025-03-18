@@ -249,8 +249,8 @@ def main():
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
         if (rotate):
-            frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-
+            frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+            
         dets_conf = get_all_detections(detector, frame)
         
         # Pass the detections, number of frame and frame(np.array) to the tracker, also pass camera name
