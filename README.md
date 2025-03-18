@@ -34,6 +34,10 @@ The provided dataset consists of videos recorded along rows of apple trees orien
 ...
 ```
 
+Videos were captured with the cameras in vertical setup to cover the complete height of the trees. To perform detection and tracking, frames must be rotated 90º
+counterclokwise.
+
+
 ## Video Capture:
 
 * Videos were captured using ZED and Azure Kinect cameras.
