@@ -38,7 +38,6 @@ Videos were captured with the cameras in vertical setup to cover the complete he
 counterclokwise.
 
 
-## Video Capture:
 
 * Videos were captured using ZED and Azure Kinect cameras.
 * Only the RGB (left view) information was utilized.
@@ -57,7 +56,11 @@ Where:
 * **distance**: ```{%03d}``` (distance from camera to trees, 125, 175, or 225 cm)
 * **height**: ```{%03d}``` (camera height in centimeters)
 
-For ease of use, the original SVO and MKV videos have been converted to MP4 format, eliminating the need to install the ZED and Kinect SDKs.
+For ease of use, the original SVO and MKV videos have been converted to MP4 (H264) format, eliminating the need to install the ZED
+and Kinect SDKs. This may cause some differences between the results presented in the paper and the results using this code.
+
+
+## Video Capture:
 
 Example: ```210928_080625_z_r1_e_015_225_162.mp4```
 
@@ -79,14 +82,14 @@ Required Files:
 
 ```
 $ python fruit_tracker_simple.py --help
-usage: fruit_tracker_simple.py [-h] [--video VIDEO] [--segments-file SEGMENTS_FILE] [--weights WEIGHTS] [--offset OFFSET] [--conf CONFIDENCE]
+usage: fruit_tracker_simple.py [-h] [--video VIDEO_NAME] [--segments-file SEGMENTS_FILE] [--weights WEIGHTS] [--offset OFFSET] [--conf CONFIDENCE]
                                [--min_area MIN_AREA] [--data DATA] [--camera CAMERA] [--rotate ROTATE] [--results_file PREDICTIONS_FILENAME]
 
 Evaluate detection
 
 options:
   -h, --help            show this help message and exit
-  --video VIDEO         Video file path.
+  --video VIDEO_NAME    Video file path.
   --segments-file SEGMENTS_FILE
                         File containing the limits of the segments. For each video, the segment limits are defined at the frame where the segment change line
                         is centered on the frame.
@@ -109,7 +112,7 @@ python3 fruit_tracker_simple.py --video data/210928_100624_k_r1_e_015_225_162_rg
 
 **Output:**
 
-The tracking results will be saved in ```results/all_predictions.csv```
+The tracking results will be saved in ```results/VIDEO_NAME/all_predictions.csv```
 
 ### Step 2: Fruit Count Assignment
 After running fruit_tracker_simple.py, use the assign_apples.py script to count the fruits in each stretch.
