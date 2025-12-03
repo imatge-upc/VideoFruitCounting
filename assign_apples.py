@@ -61,7 +61,6 @@ def main():
         path_to_stretch_num = os.path.join(path_to_results, 'all_apples.csv')
         path_to_all_apples = os.path.join(path_to_results, 'apples_stretch.csv')
         path_to_all_predictions = os.path.join(path_to_results, 'all_predictions.csv')
-        path_to_gps = os.path.join(path_to_results, 'frame_coordinates.csv')
 
         # If the video is shot from west, apply a transformation in order to invert the stretch number, so the stretch
         # 1 will be 21, 2 -> 20, etc...

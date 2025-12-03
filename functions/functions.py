@@ -10,41 +10,6 @@ import pandas as pd # JRMR
 from functions.bbox_utils import augment_size_of_bboxes_in_crops
 
 
-def filter_by_depth(new_predictions, depth, user_depth):
-    """
-    Filter detections by depth
-
-    Parameters:
-        - new_predictions: detections to filter
-        - depth: Depth images as np
-        - user_depth: Max depth of detections
-
-    Returns:
-        - new_predictions: with the input detections filtered by depth
-    """
-    for id in new_predictions['ids']:
-        apple_id_index = new_predictions['ids'].index(id)
-
-        bbox = new_predictions['bboxes'][apple_id_index]
-        bbox_depth = depth[int(bbox[1]):int(bbox[3]), int(bbox[0]):int(bbox[2])]
-
-        if len(bbox_depth) > 0:
-            mean_depth = np.mean(bbox_depth)
-
-            if mean_depth > user_depth:
-                del new_predictions['ids'][apple_id_index]
-                del new_predictions['bboxes'][apple_id_index]
-                del new_predictions['appears'][apple_id_index]
-                del new_predictions['temporal_stretch'][apple_id_index]
-                del new_predictions['final_stretch'][apple_id_index]
-                del new_predictions['scores'][apple_id_index]
-                del new_predictions['depth'][apple_id_index]
-            else:
-                new_predictions['depth'][apple_id_index] = round(float(mean_depth), 2)
-
-    return new_predictions
-
-
 def xywh2abcd(xywh):
     """
     Transform the bounding boxxes from yxwh format to abcd format
@@ -281,37 +246,6 @@ def perform_tracking(new_predictions, all_tracking_predictions, stretch, i):
 
     return all_tracking_predictions
 
-def write_results(csv_all_predictions_filename, csv_frame_coordinates, all_tracking_predictions, video_extension,
-                  gps_file, frame_coordinates_list):
-    """
-    Write the final results
-
-    Parameters:
-        - csv_all_predictions_filename: path to all predictions file
-        - csv_frame_coordinates: path to frame coordinates in case of GPS
-        - all_tracking_predictions: results of all the detections in each frame
-        - video_extension: video extension 'mkv' or 'svo' to check if executed with GPS
-        - gps_file: gps or gt file to check if executed with GPS
-        - frame_coordinates_list: list with the coordinates of each frame
-    """
-    # Write all predictions on CSV
-    os.makedirs(os.path.dirname(csv_all_predictions_filename), exist_ok=True)
-    f = open(csv_all_predictions_filename, 'w')
-    all_tracking_predictions_header = ['NumFrame', 'ID', 'x_min', 'y_min', 'w', 'h', 'score', 'stretch']
-    writer = csv.writer(f)
-    writer.writerow(all_tracking_predictions_header)
-    writer.writerows(all_tracking_predictions)
-    f.close()
-
-    if video_extension == 'svo' and str(gps_file)[-3:] == 'txt':
-        # Write the CSV with frame coordinates
-        os.makedirs(os.path.dirname(csv_frame_coordinates), exist_ok=True)
-        f = open(csv_frame_coordinates, 'w')
-        header = ['NumFrame', 'Latitude', 'Longitude']
-        writer = csv.writer(f)
-        writer.writerow(header)
-        writer.writerows(frame_coordinates_list)
-        f.close()
 
 def write_results_simple (csv_all_predictions_filename, all_tracking_predictions):
     """
