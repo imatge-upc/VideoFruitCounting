@@ -56,9 +56,8 @@ Where:
 * **distance**: ```{%03d}``` (distance from camera to trees, 125, 175, or 225 cm)
 * **height**: ```{%03d}``` (camera height in centimeters)
 
-For ease of use, the original SVO and MKV videos have been converted to MP4 (H264) format, eliminating the need to install the ZED
-and Kinect SDKs. This may cause some differences between the results presented in the paper and the results using this code.
 
+To improve accessibility, the original SVO and MKV videos were converted to the MP4 (H.264) format, removing the dependency on the ZED and Kinect SDKs. Consequently, results generated with this code may exhibit minor discrepancies compared to those published in the paper.
 
 ## Video Capture:
 
