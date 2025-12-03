@@ -60,13 +60,13 @@ def get_scan_stretch(Prow_transformed, transferred_coordinates):
     index = bisect(x_axis_value_list, actual_point)
     return index
 
-def get_gt_list(csv_path, exec_mode, gt_file):
+
+def get_gt_list(csv_path, gt_file):
     """
     Read the ground truth csv
 
     Parameters:
         - csv_path: path to the 'csv' file
-        - exec_mode: execution mode (SFRAME or SGNSS)
         - gt_file: path to ground truth file
 
     Returns:
@@ -78,31 +78,17 @@ def get_gt_list(csv_path, exec_mode, gt_file):
     # List where will be stored the stretch changing frames
     gt_list = []
 
-    if exec_mode == 'SFRAME':
-        with open(gt_file, 'r') as csv_file:
-            csv_reader = csv.reader(csv_file, delimiter=',')
-            for row in csv_reader:
-                row_name = row[0]
-                if row_name[-1].isspace():
-                    row_name = row_name[:-1]
-                if row_name == video_name:
-                    gt_list.append(row)
-        gt_list = gt_list.pop(0)
-        del gt_list[0]
 
-    elif exec_mode == 'SGNSS':
-        previous_stretch = None
-
-        with open(csv_path, 'r') as csv_file:  # JRMR: Not sure if this actually works!!???
-            csv_reader = csv.reader(csv_file, delimiter=',')
-            for row in csv_reader:
-                # actual_stretch = row['stretch']
-                actual_stretch = row[7]
-                if previous_stretch is not None and actual_stretch != previous_stretch:
-                    # gt_list.append(row['NumFrame'])
-                    gt_list.append(row[0])
-                previous_stretch = actual_stretch
-        del gt_list[0]
+    with open(gt_file, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        for row in csv_reader:
+            row_name = row[0]
+            if row_name[-1].isspace():
+                row_name = row_name[:-1]
+            if row_name == video_name:
+                gt_list.append(row)
+    gt_list = gt_list.pop(0)
+    del gt_list[0]
 
     return gt_list
 
@@ -248,7 +234,7 @@ def most_frequent(List):
     return max(set(List), key=List.count)
 
 
-def assign_all_apples(frames_changing, assigned_apples, all_apples, id_ass_apples, stretch_velocities):
+def assign_all_apples(frames_changing, assigned_apples, all_apples, id_ass_apples, stretch_velocities, half_image = 540):
     """
     Calculate in which stretch each apple is located, taking as a reference the 'mark' of the stretch change
 
@@ -258,12 +244,17 @@ def assign_all_apples(frames_changing, assigned_apples, all_apples, id_ass_apple
         - all_apples: list with all detections stored in the input csv
         - id_ass_apples: list with the ids of the assigned apples
         - stretch_velocities: list with the final velocities of the stretch objects
+        - half_image: half the width of the input video (in pixels) 
 
     Returns:
         - assigned_apples: list with all the apples that have been assigned to a stretch
     """
-    half_image = 540
+
+    len_frames_changing = len(frames_changing)
+    
     for idx, pair in enumerate(frames_changing):
+        print (f'Processing {idx} of {len_frames_changing}')
+        
         apples_to_assign = {}
 
         # List to store all the ids of the seen apples
@@ -326,8 +317,7 @@ def assign_all_apples(frames_changing, assigned_apples, all_apples, id_ass_apple
     return assigned_apples
 
 
-def write_results(apples_stretch, path_to_all_apples, path_to_stretch_num, csv_path, path_to_all_predictions,
-                  path_to_gps, gps_path, exec_mode):
+def write_results(apples_stretch, path_to_all_apples, path_to_stretch_num, csv_path, path_to_all_predictions):
     """
     write the final results on a csv
 
@@ -337,12 +327,10 @@ def write_results(apples_stretch, path_to_all_apples, path_to_stretch_num, csv_p
         - path_to_stretch_num: path to write all_apples.csv
         - csv_path: source path of all_predictions.csv
         - path_to_all_predictions: path to write all_predictions.csv
-        - path_to_gps: path to write  frame_coordinates.csv
-        - gps_path: source path of frame_coordinates
-        - exec_mode: execution mode (SGNSS or SFRAME)
     """
     # Count number of apples in each stretch
     counts = {}
+
     for sublist in apples_stretch:
         value = sublist[1]
         if value < 1 or value > 21:
@@ -372,9 +360,6 @@ def write_results(apples_stretch, path_to_all_apples, path_to_stretch_num, csv_p
     os.makedirs(os.path.dirname(path_to_all_predictions), exist_ok=True)
     shutil.copy(csv_path, path_to_all_predictions)
 
-    if exec_mode == 'SGNSS':
-        os.makedirs(os.path.dirname(path_to_gps), exist_ok=True)
-        shutil.copy(gps_path, path_to_gps)
 
 
 def get_video_combinations(root_dir):
@@ -397,7 +382,7 @@ def get_video_combinations(root_dir):
             parts = subdir.split("_")
 
             if len(parts) != 8:
-                print(f'El subdirectorio {subdir} tiene un formato incorrecto')
+                print(f'ERROR: Incorrect format for folder name: {subdir}. Omiting it...')
                 continue
 
             date, time, camera, row, orientation, speed, distance, altitude = parts
@@ -406,10 +391,10 @@ def get_video_combinations(root_dir):
             try:
                 date = datetime.strptime(date, '%y%m%d')
             except ValueError:
-                print(f'La fecha en el subdirectorio {subdir} tiene un formato incorrecto')
+                print(f'ERROR: Incorrect date format in folder {subdir}')
                 continue
 
-            # Check if the combiantion is valid
+            # Check if the combination is valid
             if distance in completed_distances:
                 continue
 
