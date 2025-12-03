@@ -12,7 +12,7 @@ from tracking.FruitTracker_simple import FruitTracker
 from functions.functions import get_all_detections, perform_tracking, write_results_simple
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Evaluate detection')
+    parser = argparse.ArgumentParser(description='Perform apple detection and tracking on the provided video')
 
     parser.add_argument('--video', dest='video', help='Video file path.')
     parser.add_argument('--segments-file', dest='segments_file',
