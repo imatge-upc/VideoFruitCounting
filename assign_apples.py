@@ -1,7 +1,7 @@
 from functions.utils import stretch_velocity, read_csv, get_change_frames, assign_all_apples, write_results, get_gt_list
 import argparse
 import os
-
+import sys
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Perform apple assignment to stretches')
@@ -24,34 +24,19 @@ def main():
     sframe_file = args.sframe_file
 
 
-    velocity = data_path.split('/')[-1]
-
-    exec_mode = str
-    camera = str
     gt_list = []
-    if 'KA' in data_path:
-        camera = 'KA'
-        exec_mode = 'SFRAME'
-    else:
-        camera = 'ZED'
-        if 'GNSS' in data_path:
-            exec_mode = 'SGNSS'
-        else:
-            exec_mode = 'SFRAME'
 
     print ('Configured options:')
-    print (f'Camera: {camera}, exec mode: {exec_mode}, SFRAME file: {sframe_file}')
-    for file in os.listdir(data_path):
-        print(file)
-        if exec_mode == 'SGNSS':
-            gps_path = os.path.join(data_path, file, 'frame_coordinates.csv')
-        else:
-            gps_path = None
 
-        csv_path = os.path.join(data_path, file, 'all_predictions.csv')
-        gt_list = get_gt_list(csv_path, exec_mode, sframe_file)
+    for video_name in os.listdir(data_path):
+        print(video_name) # Folder with the name of the video. Contains the results for this video.
+
+        csv_path = os.path.join(data_path, video_name, 'all_predictions.csv')
+        
+        gt_list = get_gt_list(csv_path, sframe_file)
         all_apples = read_csv(csv_path)
 
+        
         # assigned_apples is a list with all the apples that have been assigned to a stretch
         # stretch_velocities contains the mean velocity of all the apples that appears in the changing frame
         # Then, the mean velocity for each frame can be known
@@ -67,13 +52,10 @@ def main():
                                            all_apples=all_apples, id_ass_apples=id_ass_apples,
                                            stretch_velocities=stretch_velocities)
 
-        # Get the name of the video, from the path of csv data
-        video_name = csv_path.split(os.path.sep)[-2]
-        video_orientation = video_name[-13:-12]
+        video_orientation = video_name.split('_')[4] # In the formatted video name, fifth field is the orientation
 
         # Create folder with the video names to store the results
-        # path_to_results = os.path.join('results_stretch', camera, exec_mode, file)
-        path_to_results = os.path.join('results_stretch', camera, exec_mode, velocity, file)
+        path_to_results = os.path.join('results_stretch', video_name)
         os.makedirs(os.path.dirname(path_to_results), exist_ok=True)
 
         path_to_stretch_num = os.path.join(path_to_results, 'all_apples.csv')
@@ -85,11 +67,9 @@ def main():
         # 1 will be 21, 2 -> 20, etc...
         if video_orientation == 'w':
             assigned_apples = [[sublist[0], 22 - sublist[1]] for sublist in assigned_apples]
-            write_results(assigned_apples, path_to_all_apples, path_to_stretch_num, csv_path, path_to_all_predictions,
-                          path_to_gps, gps_path, exec_mode)
+            write_results(assigned_apples, path_to_all_apples, path_to_stretch_num, csv_path, path_to_all_predictions)
         else:
-            write_results(apples_stretch, path_to_all_apples, path_to_stretch_num, csv_path, path_to_all_predictions,
-                          path_to_gps, gps_path, exec_mode)
+            write_results(apples_stretch, path_to_all_apples, path_to_stretch_num, csv_path, path_to_all_predictions)
 
 
 if __name__ == "__main__":
