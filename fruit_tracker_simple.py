@@ -166,6 +166,18 @@ def main():
     data = args.data
     csv_all_predictions_filename = args.predictions_filename
 
+
+    print ('Parameters: ---------------------------')
+    print (f'video path: {video_path}')
+    print (f'segments file: {segments_file}')
+    print (f'confidence: {confidence}')
+    print (f'offset: {offset}')
+    print (f'weights: {weights}')
+    print (f'min area: {min_area}')
+    print (f'camera: {camera}')
+    print (f'rotate: {rotate}')
+    print (f'data: {data}')
+    print (f'predictions filename: {csv_all_predictions_filename}')
     
     # Initialize variables
     ii = offset
@@ -252,7 +264,8 @@ def main():
             frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
             
         dets_conf = get_all_detections(detector, frame)
-        
+
+
         # Pass the detections, number of frame and frame(np.array) to the tracker, also pass camera name
         fruit_tracker.get_detections(dets_conf, ii, frame, stretch)
         
@@ -261,8 +274,6 @@ def main():
 
         new_predictions = tracking_predictions[-1]
         
-
-
         if camera != 'Agnostic':
             # If the video is shot from west, apply a transformation in order to invert the stretch number, so the stretch
             # 1 will be 21, 2 -> 20, etc...
