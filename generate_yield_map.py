@@ -3,6 +3,7 @@ import cv2
 import os
 import csv
 import numpy as np
+import sys
 
 from functions.utils import get_video_combinations, get_gnss_ref, adapt_prow, get_max_min_csv, assign_color
 import argparse
@@ -37,6 +38,10 @@ def main():
 
     combinations = get_video_combinations(all_videos_results)
 
+    if len(combinations) == 0:
+        print ('The provided path contains no valid results, Exiting ...')
+        sys.exit()
+        
     img = cv2.imread(image)
     for key, values in combinations.items():
         if len(values) < 8:
