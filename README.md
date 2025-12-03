@@ -78,14 +78,15 @@ Required Files:
 - [Download example videos](https://gofile.me/73Gps/3VE9yy9aX)
 - [Download pretrained YOLOv5 model](https://gofile.me/73Gps/clQj1gJhv)
 - [Download SFRAME files](https://gofile.me/73Gps/DECp9orob)
-- Run the fruit_tracker_simple.py script:
+
+Run the fruit_tracker_simple.py script:
 
 ```
 $ python fruit_tracker_simple.py --help
 usage: fruit_tracker_simple.py [-h] [--video VIDEO_NAME] [--segments-file SEGMENTS_FILE] [--weights WEIGHTS] [--offset OFFSET] [--conf CONFIDENCE]
                                [--min_area MIN_AREA] [--data DATA] [--camera CAMERA] [--rotate ROTATE] [--results_file PREDICTIONS_FILENAME]
 
-Evaluate detection
+Perform apple detection and tracking on the provided video
 
 options:
   -h, --help            show this help message and exit
