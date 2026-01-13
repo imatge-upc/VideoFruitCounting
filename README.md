@@ -149,7 +149,7 @@ Two CSV files will be generated:
 ## Authorship
 
  
-This project is contributed by [GRAP-UdL-AT](http://www.grap.udl.cat/en/index.html), [imatge-upc](https://imatge.upc.edu/) and ,  [UEA-Irta](https://github.com/UEA-Irta).
+This project is contributed by [GRAP-UdL-AT](http://www.grap.udl.cat/en/index.html), [GPI](https://imatge.upc.edu/) and ,  [UEA-Irta](https://github.com/UEA-Irta).
 
 Please contact authors to report bugs @ marc.felip@udl.cat, @ ramon.morros@upc.edu, @ jordi.gene@irta.cat
 
@@ -159,7 +159,6 @@ Please cite our research article or dataset when using our software and/or datas
 
 ```
 @article{XXXXX2026,
-
    title   = {Video-Based Fruit Detection and Tracking: Effects of Scanning Conditions on Counting and Mapping Accuracy},
    author  = {Felip-Pom{\'e}s, Marc and Gen{\'e}-Mola, Jordi and Arn{\'o}, Jaume and Lordan, Jaume and Ruiz-Hidalgo, Javier and Morros, Josep-Ramon and Net Barn{\'e}s, Francesc and Gregorio, Eduard},
    journal = {Submitted},
